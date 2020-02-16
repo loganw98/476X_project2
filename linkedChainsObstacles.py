@@ -5,11 +5,27 @@
 
 import random, math, pygame
 from pygame.locals import *
+from array import *
 from math import sin, cos, pi
 
 #constants
 WINSIZE = [640, 480]
+SIZE = 360
+cObstacles = [[0 for i in range(SIZE)] for i in range(SIZE)]
 
+class Rectangle:
+    def __init__(x, y, width, height, theta):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.theta = theta
+        self.v0 = (width * cos(theta), width * sin(theta))
+        self.v1 = (height/2 * cos(theta + pi/2), height/2 * sin(theta+pi/2))
+    def vertices():
+        #Order is Lower Left, Upper Left, Upper Right, Lower Right
+        return [(x+v1[0],y+v1[1]), (x-v1[0],y-v1[1]),
+                (x-v1[0]+v0[0],y-v1[1]+v0[1]), (x+v1[0]+v0[0],y+v1[1]+v0[1])]
 
 def drawLink(x, y, width, height, theta, screen, color):
     points = [] # start with an empty list
@@ -45,7 +61,7 @@ def main():
     centery = 240
     
     theta = 0
-    while theta <= 1.*pi*(180/pi):
+    while theta <= 4.*pi:
         t2 = (theta, theta+theta*0.5)
         screen.fill(black)
         draw2Links(centerx,centery, 100, 20, t2, screen, white);
@@ -53,7 +69,7 @@ def main():
         pygame.draw.rect(screen, RED, [centerx, centery-125, 20, 20])
         pygame.draw.rect(screen, RED, [centerx, centery+125, 20, 20])
         pygame.display.update()
-        pygame.time.wait(100)
+        pygame.time.wait(5)
         theta = theta + (pi/180)
    
     done = 0
