@@ -22,10 +22,17 @@ class Rectangle:
         self.theta = theta
         self.v0 = (width * cos(theta), width * sin(theta))
         self.v1 = (height/2 * cos(theta + pi/2), height/2 * sin(theta+pi/2))
-    def vertices():
-        #Order is Lower Left, Upper Left, Upper Right, Lower Right
-        return [(x+v1[0],y+v1[1]), (x-v1[0],y-v1[1]),
-                (x-v1[0]+v0[0],y-v1[1]+v0[1]), (x+v1[0]+v0[0],y+v1[1]+v0[1])]
+        self.LL = (x+v1[0],y+v1[1])
+        self.UL = (x-v1[0],y-v1[1])
+        self.UR = (x-v1[0]+v0[0],y-v1[1]+v0[1])
+        self.LR = (x+v1[0]+v0[0],y+v1[1]+v0[1])
+
+def calcAxi(r1, r2):
+    axis1 = (r1.UR[0] - r1.UL[0], r1.UR[1] - r1.UL[1])
+    axis2 = (r1.UR[0] - r1.LR[0], r1.UR[1] - r1.LR[1])
+    axis3 = (r2.UL[0] - r2.LL[0], r2.UL[1] - r2.LL[1])
+    axis4 = (r2.UL[0] - r2.UR[0], r2.UL[1] - r2.UR[1])
+    return (axis1, axis2, axis3, axis4)
 
 def drawLink(x, y, width, height, theta, screen, color):
     points = [] # start with an empty list
