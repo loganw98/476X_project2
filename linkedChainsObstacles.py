@@ -32,7 +32,9 @@ def calcAxi(r1, r2):
     axis2 = (r1.UR[0] - r1.LR[0], r1.UR[1] - r1.LR[1])
     axis3 = (r2.UL[0] - r2.LL[0], r2.UL[1] - r2.LL[1])
     axis4 = (r2.UL[0] - r2.UR[0], r2.UL[1] - r2.UR[1])
-    return (axis1, axis2, axis3, axis4)
+    return [axis1, axis2, axis3, axis4]
+
+#projection onto above axi next
 
 def drawLink(x, y, width, height, theta, screen, color):
     points = [] # start with an empty list
