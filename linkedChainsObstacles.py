@@ -11,30 +11,17 @@ from math import sin, cos, pi
 #constants
 WINSIZE = [640, 480]
 SIZE = 360
-cObstacles = [[0 for i in range(SIZE)] for i in range(SIZE)]
+    
 
-class Rectangle:
-    def __init__(x, y, width, height, theta):
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.theta = theta
-        self.v0 = (width * cos(theta), width * sin(theta))
-        self.v1 = (height/2 * cos(theta + pi/2), height/2 * sin(theta+pi/2))
-        self.LL = (x+v1[0],y+v1[1])
-        self.UL = (x-v1[0],y-v1[1])
-        self.UR = (x-v1[0]+v0[0],y-v1[1]+v0[1])
-        self.LR = (x+v1[0]+v0[0],y+v1[1]+v0[1])
+#working on this
+def isCloseToObstacle(r1):
+    ob1x = 320
+    ob2x = 320
+    ob1y = 240-125
+    ob2y = 240+125
 
-def calcAxi(r1, r2):
-    axis1 = (r1.UR[0] - r1.UL[0], r1.UR[1] - r1.UL[1])
-    axis2 = (r1.UR[0] - r1.LR[0], r1.UR[1] - r1.LR[1])
-    axis3 = (r2.UL[0] - r2.LL[0], r2.UL[1] - r2.LL[1])
-    axis4 = (r2.UL[0] - r2.UR[0], r2.UL[1] - r2.UR[1])
-    return [axis1, axis2, axis3, axis4]
-
-#projection onto above axi next
+def distance(x1, x2, y1, y2):
+    return math.sqrt(math.pow((x2-x1),2) + math.pow((y2-y1),2))
 
 def drawLink(x, y, width, height, theta, screen, color):
     points = [] # start with an empty list
@@ -58,6 +45,7 @@ def draw2Links(x, y, width, height, theta, screen, color):
 
 def main():
     #initialize and prepare screen
+            
     pygame.init()
     screen = pygame.display.set_mode(WINSIZE)
     pygame.display.set_caption('Linked Chains with Obstacles: G. Song, 2019s')
@@ -73,12 +61,15 @@ def main():
     while theta <= 4.*pi:
         t2 = (theta, theta+theta*0.5)
         screen.fill(black)
-        draw2Links(centerx,centery, 100, 20, t2, screen, white);
+        #draw2Links(centerx,centery, 100, 20, t2, screen, white);
+        x, y = drawLink(centerx,centery, 100, 20, 180*(pi/180), screen, white);
+        drawLink(x,y, 100, 20, 270*(pi/180), screen, white);
         # draw obstacles
+        #pygame.draw.rect(screen, RED, [centerx, centery, 10, 10])
         pygame.draw.rect(screen, RED, [centerx, centery-125, 20, 20])
         pygame.draw.rect(screen, RED, [centerx, centery+125, 20, 20])
         pygame.display.update()
-        pygame.time.wait(5)
+        pygame.time.wait(50)
         theta = theta + (pi/180)
    
     done = 0
