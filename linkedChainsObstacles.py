@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 # Display a rectangle
-# Guang Song
+# Created by Guang Song
+# Modified for Collision By Logan Williams
 
 import random, math, pygame
 from pygame.locals import *
@@ -12,16 +13,11 @@ from math import sin, cos, pi
 WINSIZE = [640, 480]
 SIZE = 360
     
-
-#working on this
-def isCloseToObstacle(r1):
-    ob1x = 320
-    ob2x = 320
-    ob1y = 240-125
-    ob2y = 240+125
-
-def distance(x1, x2, y1, y2):
-    return math.sqrt(math.pow((x2-x1),2) + math.pow((y2-y1),2))
+def readFromFile(name):
+    f = open(name, "r")
+    for line in f:
+        thetas = line.split(' ')
+        theta = (int(thetas[0]), int(thetas[1]))
 
 def drawLink(x, y, width, height, theta, screen, color):
     points = [] # start with an empty list
@@ -46,6 +42,7 @@ def draw2Links(x, y, width, height, theta, screen, color):
 def main():
     #initialize and prepare screen
             
+    name = "path.txt"
     pygame.init()
     screen = pygame.display.set_mode(WINSIZE)
     pygame.display.set_caption('Linked Chains with Obstacles: G. Song, 2019s')
@@ -58,19 +55,17 @@ def main():
     centery = 240
     
     theta = 0
-    while theta <= 4.*pi:
-        t2 = (theta, theta+theta*0.5)
+    f = open(name, "r")
+    for line in f:
+        thetas = line.split(' ')
+        theta = (int(thetas[0]) * (pi/180), int(thetas[1]) * (pi/180))
         screen.fill(black)
-        #draw2Links(centerx,centery, 100, 20, t2, screen, white);
-        x, y = drawLink(centerx,centery, 100, 20, 180*(pi/180), screen, white);
-        drawLink(x,y, 100, 20, 270*(pi/180), screen, white);
+        draw2Links(centerx,centery, 100, 20, theta, screen, white);
         # draw obstacles
-        #pygame.draw.rect(screen, RED, [centerx, centery, 10, 10])
         pygame.draw.rect(screen, RED, [centerx, centery-125, 20, 20])
         pygame.draw.rect(screen, RED, [centerx, centery+125, 20, 20])
         pygame.display.update()
         pygame.time.wait(50)
-        theta = theta + (pi/180)
    
     done = 0
     while not done:

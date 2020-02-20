@@ -1,0 +1,34 @@
+Logan Williams
+Computer Science 476X/576X
+Project2
+
+
+This project was built using Python3 and Java
+
+For the cSpace image, the red signifies the invalid configurations, where the white
+signifies the valid configurations
+
+The python portion does cObstacle writing, showing the cSpace, and the movement
+of links
+
+The java portion of the project reads in from the text file that python writes, does
+Breadth-First Search, and outputs the resulting solution path to a file. This file
+is then put back into the python portion to do the configuration drawing.
+
+Also attached are screenshots of the configuration space
+
+Run order (while in Project2 folder):
+1. cspace.py (python3 cspace.py)
+2. search.java (java -cp Search/src search/Search)
+3. linkedChainsObstacles.py (python3 linkedChainsObstacles.py)
+
+Please note that the method that I used to detect collision was my own imperfect version of
+the Separating Axis Theorem. I think that there are a lot of false positives due to math
+being slightly incorrect, but I do not believe that it misses any configurations that are 
+invalid. Nonetheless, this was fun to research and put time into, even if this approach is 
+slightly overkill.
+The source I used is listed below, if you would like a cool read
+
+E. Meythaler, “2D Rotated Rectangle Collision,” GameDev.net, 03-Feb-2009. [Online]. Available: https://www.gamedev.net/articles/programming/general-and-gameplay-programming/2d-rotated-rectangle-collision-r2604/. [Accessed: 18-Feb-2020].
+
+
